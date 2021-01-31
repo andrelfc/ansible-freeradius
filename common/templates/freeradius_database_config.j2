@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sed -i "s/dialect = \"sqlite\"/dialect = \"{{database}}\"/g;"\
+"s/#	server = \"localhost\"/ 	server = \"{{ip_db}}\"/g;"\
+"s/#	port = 3306/ 	port = \"{{port_db}}\"/g;"\
+"s/#	login = \"radius\"/ 	login = \"{{login_db}}\"/g;"\
+"s/#	password = \"radpass\"/ 	password = \"{{password_db}}\"/g;"\
+"s/ 	radius_db = \"radius\"/ 	radius_db = \"{{name_db}}\"/g;"\
+"s/#	read_clients = yes/ 	read_clients = yes/g;"\
+"s/driver = \"rlm_sql_null\"/driver = \"rlm_sql_{{database}}\"/g" /etc/freeradius/3.0/mods-available/sql
