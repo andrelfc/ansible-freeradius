@@ -1,0 +1,13 @@
+# SSH
+
+ansible_ssh_user:
+ansible_ssh_pass: 
+
+# Freeradius - Config Database
+
+database: 
+ip_db:
+port_db:
+login_db:
+password_db:
+name_db:

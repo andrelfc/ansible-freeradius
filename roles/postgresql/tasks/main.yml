@@ -1,14 +1,3 @@
----
-- name: Install Freeradius
-  apt:
-   name:
-    - freeradius
-    - freeradius-common
-    - freeradius-config
-    - freeradius-postgresql
-    - freeradius-utils
-    - gnupg
-
 - name: Restore schema - PostgreSQL
   postgresql_db:
     name: "{{ name_db }}"
@@ -46,3 +35,9 @@
   file:
     path: /tmp/freeradius_database_config.sh
     state: absent
+
+- name: Restart Freeradius service
+  systemd:
+    state: restarted
+    # daemon_reload: yes
+    name: freeradius

@@ -1,0 +1,10 @@
+---
+- name: Freeradius installation and configuration
+  hosts: server-freeradius
+  # remote_user: root
+  # become: yes
+  # become_method: sudo
+
+  roles:
+    - common
+    - { role: postgresql, when: database == "postgresql" }
