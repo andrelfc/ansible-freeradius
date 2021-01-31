@@ -1,2 +1,10 @@
 ---
-# tasks file for common
+- name: Install Freeradius
+  apt:
+   name:
+    - freeradius
+    - freeradius-common
+    - freeradius-config
+    - freeradius-postgresql
+    - freeradius-utils
+    - gnupg
