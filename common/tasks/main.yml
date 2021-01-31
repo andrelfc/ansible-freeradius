@@ -8,3 +8,19 @@
     - freeradius-postgresql
     - freeradius-utils
     - gnupg
+
+- name: Restore schema - PostgreSQL
+  postgresql_db:
+    name: radius
+    login_user: postgres
+    login_password: postgres
+    state: restore
+    target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/schema.sql
+
+- name: Restore setup - PostgreSQL
+  postgresql_db:
+    name: radius
+    login_user: postgres
+    login_password: postgres
+    state: restore
+    target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/setup.sql
