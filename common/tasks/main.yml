@@ -11,16 +11,38 @@
 
 - name: Restore schema - PostgreSQL
   postgresql_db:
-    name: radius
-    login_user: postgres
-    login_password: postgres
+    name: "{{ name_db }}"
+    login_user: "{{ login_db }}"
+    login_password: "{{ password_db }}"
     state: restore
     target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/schema.sql
 
 - name: Restore setup - PostgreSQL
   postgresql_db:
-    name: radius
-    login_user: postgres
-    login_password: postgres
+    name: "{{ name_db }}"
+    login_user: "{{ login_db }}"
+    login_password: "{{ login_db }}"
     state: restore
     target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/setup.sql
+
+- name: Create a symbolic link
+  file:
+    src: /etc/freeradius/3.0/mods-available/sql
+    dest: /etc/freeradius/3.0/mods-enabled/sql
+    state: link
+
+- name: Change the owner and group of the file
+  shell: chown -R freerad:freerad /etc/freeradius/3.0/mods-enabled/sql
+
+- name: Copy database configuration script
+  template:
+    src: freeradius_database_config.j2
+    dest: /tmp/freeradius_database_config.sh
+
+- name: Run database configuration script
+  command: /bin/bash /tmp/freeradius_database_config.sh
+
+- name: Remove database configuration script
+  file:
+    path: /tmp/freeradius_database_config.sh
+    state: absent
