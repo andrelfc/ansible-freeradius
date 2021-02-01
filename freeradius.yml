@@ -1,7 +1,7 @@
 ---
 - name: Freeradius installation and configuration
   hosts: server-freeradius
-  # remote_user: root
+  remote_user: root
   # become: yes
   # become_method: sudo
 
