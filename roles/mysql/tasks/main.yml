@@ -1,0 +1,45 @@
+---
+
+- name: Restore Schema Database
+  mysql_db:
+    name: "{{ name_db }}"
+    login_user: "{{ login_db }}"
+    login_password: "{{ password_db }}"
+    state: import
+    target: /etc/freeradius/3.0/mods-config/sql/main/mysql/schema.sql
+
+# - name: Restore setup database
+#   mysql_db:
+#     name: "{{ name_db }}"
+#     login_user: "{{ login_db }}"
+#     login_password: "{{ password_db }}"
+#     state: import
+#     target: /etc/freeradius/3.0/mods-config/sql/main/mysql/setup.sql
+
+- name: Create a Symbolic Link
+  file:
+    src: /etc/freeradius/3.0/mods-available/sql
+    dest: /etc/freeradius/3.0/mods-enabled/sql
+    state: link
+
+- name: Change the owner and group of the file
+  shell: chown -R freerad:freerad /etc/freeradius/3.0/mods-enabled/sql
+
+- name: Copy database configuration script
+  template:
+    src: freeradius_database_config.j2
+    dest: /tmp/freeradius_database_config.sh
+
+- name: Run database configuration script
+  command: /bin/bash /tmp/freeradius_database_config.sh
+
+- name: Remove database configuration script
+  file:
+    path: /tmp/freeradius_database_config.sh
+    state: absent
+
+- name: Restart Freeradius Service
+  systemd:
+    state: restarted
+    # daemon_reload: yes
+    name: freeradius

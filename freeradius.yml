@@ -7,4 +7,5 @@
 
   roles:
     - common
-    - { role: postgresql, when: database == "postgresql" }
+    - { role: postgresql, when: database == 'postgresql' }
+    - { role: mysql, when: database == 'mysql' }
