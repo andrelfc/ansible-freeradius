@@ -1,10 +1,14 @@
 ---
+
+- name: Apt Update
+  apt:
+    update_cache: yes
+
 - name: Install Freeradius
   apt:
    name:
     - freeradius
     - freeradius-common
     - freeradius-config
-    - freeradius-postgresql
     - freeradius-utils
     - gnupg

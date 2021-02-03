@@ -1,18 +1,19 @@
+---
+
+- name: Install Packages Freeradius PostgreSQL
+  apt:
+   name:
+    - postgresql-client
+    - freeradius-postgresql
+
 - name: Restore schema database
   postgresql_db:
+    login_host: "{{ ip_db }}"
     name: "{{ name_db }}"
     login_user: "{{ login_db }}"
     login_password: "{{ password_db }}"
     state: restore
     target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/schema.sql
-
-- name: Restore setup database
-  postgresql_db:
-    name: "{{ name_db }}"
-    login_user: "{{ login_db }}"
-    login_password: "{{ login_db }}"
-    state: restore
-    target: /etc/freeradius/3.0/mods-config/sql/main/postgresql/setup.sql
 
 - name: Create a symbolic link
   file:
@@ -39,5 +40,4 @@
 - name: Restart Freeradius service
   systemd:
     state: restarted
-    # daemon_reload: yes
     name: freeradius

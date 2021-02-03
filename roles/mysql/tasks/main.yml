@@ -1,20 +1,20 @@
 ---
 
+- name: Install Packages Freeradius MySQL
+  apt:
+   name:
+    - python3-pymysql
+    - freeradius-mysql
+    - mariadb-client
+
 - name: Restore Schema Database
   mysql_db:
+    login_host: "{{ ip_db }}"
     name: "{{ name_db }}"
     login_user: "{{ login_db }}"
     login_password: "{{ password_db }}"
     state: import
     target: /etc/freeradius/3.0/mods-config/sql/main/mysql/schema.sql
-
-# - name: Restore setup database
-#   mysql_db:
-#     name: "{{ name_db }}"
-#     login_user: "{{ login_db }}"
-#     login_password: "{{ password_db }}"
-#     state: import
-#     target: /etc/freeradius/3.0/mods-config/sql/main/mysql/setup.sql
 
 - name: Create a Symbolic Link
   file:
@@ -41,5 +41,4 @@
 - name: Restart Freeradius Service
   systemd:
     state: restarted
-    # daemon_reload: yes
     name: freeradius
