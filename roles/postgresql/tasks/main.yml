@@ -41,3 +41,13 @@
   systemd:
     state: restarted
     name: freeradius
+
+- name: Removing the MySQL client
+  apt:
+    name:
+      - postgresql-client
+    state: absent
+
+# - name: Remove dependencies that are no longer required
+#   apt:
+#     autoremove: yes

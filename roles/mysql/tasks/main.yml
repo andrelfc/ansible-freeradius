@@ -42,3 +42,14 @@
   systemd:
     state: restarted
     name: freeradius
+
+- name: Removing the MySQL client
+  apt:
+    name:
+      - python3-pymysql
+      - mariadb-client
+    state: absent
+
+# - name: Remove dependencies that are no longer required
+#   apt:
+#     autoremove: yes
