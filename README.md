@@ -22,10 +22,15 @@ Instalação e configuração do ambiente para o funcionamento do Freeradius com
 group_vars/server-freeradius
 
 **database**: escolha do banco de dados (mysql ou postgresql)
+
 **ip_db**: ip do banco de dados
+
 **port_db**: porta do banco de dados
+
 **login_db**: usuario do banco de dados
+
 **password_db**: senha do usuario do banco de dados
+
 **name_db**: nome do banco de dados
 
 > Arquivo de hosts
@@ -33,6 +38,7 @@ group_vars/server-freeradius
 hosts
 
 [server-freeradius]
+
 **localhost** - IP do servidor freeradius
 
 #### Comando ansible para implantacao
@@ -40,7 +46,3 @@ hosts
 ```bash
 ansible-playbook freeradius.yml -i hosts --ask-pass
 ```
-
-
-
-
